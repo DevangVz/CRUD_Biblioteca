@@ -70,7 +70,6 @@ FOREIGN KEY (genreID) references Genre(ID),
 FOREIGN KEY (publisherID) references Publisher(ID)
 );
 
-
 CREATE TABLE Reservation(
 ID int4 not null primary key auto_increment,
 clientID int4 not null,
@@ -80,3 +79,18 @@ returnDate date not null,
 FOREIGN KEY (clientID) references Client(ID),
 FOREIGN KEY (bookID) references Book(ID)
 );
+
+CREATE TABLE AuthorBook(
+ID int4 not null primary key auto_increment,
+bookID int4 not null,
+authorID int4 not null
+);
+
+
+
+/*CREATE TABLE Membership(
+ID int4 primary key not null auto_increment,
+ClientID int4,
+StartDate date not null,
+ExpirationDate date not null
+);*/
