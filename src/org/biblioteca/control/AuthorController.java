@@ -42,4 +42,11 @@ public class AuthorController {
 	public ModelAndView edit(){  
 		 return new ModelAndView("authorForm","command",new Author());  
 	}
+	
+	@RequestMapping(value="/delete/{id}", method= RequestMethod.GET)
+	public int delete(@PathVariable int id){
+		return authorDAO.delete(id); 
+	}
+	
+	
 }
