@@ -15,38 +15,36 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 @RequestMapping("/authors")
 public class AuthorController {
-	
+
 	@Autowired
 	AuthorDAO authorDAO;
-		
+
 	@RequestMapping (value="/")
 	public ModelAndView  listing(){
 		List<Author> listAuthor= authorDAO.getAll();
 		return new ModelAndView("index","list",listAuthor);
 	}
-	
+
 	@RequestMapping(value="/save",method = RequestMethod.POST)  
-    public int save(@ModelAttribute("author") Author author){  
+	public int save(@ModelAttribute("author") Author author){  
 		if(author.getID()==0)
 			return authorDAO.save(author); 
 		else
 			return authorDAO.Update(author); 
-    }
+	}
 
 	@RequestMapping(value="/edit/{id}",method = RequestMethod.GET)  
 	public ModelAndView edit(@PathVariable int id){  
-		 return new ModelAndView("authorForm","command",authorDAO.getAuthorByID(id));  
+		return new ModelAndView("authorForm","command",authorDAO.getAuthorByID(id));  
 	}
-	
+
 	@RequestMapping(value="/form/register",method = RequestMethod.GET)  
 	public ModelAndView edit(){  
-		 return new ModelAndView("authorForm","command",new Author());  
+		return new ModelAndView("authorForm","command",new Author());  
 	}
-	
+
 	@RequestMapping(value="/delete/{id}", method= RequestMethod.GET)
 	public int delete(@PathVariable int id){
 		return authorDAO.delete(id); 
 	}
-	
-	
 }
