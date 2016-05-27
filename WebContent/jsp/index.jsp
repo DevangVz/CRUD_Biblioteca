@@ -16,6 +16,9 @@
 				<tr>
 					<td><c:out value="${author.AName}" /></td>
 					<td><c:out value="${author.lastName}" /></td>
+					<td><c:out value="${author.nationality}" /></td>
+					<td><c:out value="${author.DOB}" /></td>
+					<td><c:out value="${author.lastName}" /></td>
 					<td><a href="../authors/edit/${author.ID}">Edit</a></td>
 					<td><a href="../authors/delete/${author.ID}">Delete</a></td>
 				</tr>
@@ -25,7 +28,7 @@
 		<a href="authors/form/register">Registro Autores</a></br>
 		<a href="">Registro de Libros</a></br>
 		<a href="">Registro de editoriales</a></br>
-		<a href="">Préstamos</a></br>
+		<a href="">PrÃ©stamos</a></br>
 		<a href="">Registro Usuarios</a></br>
 	</body>
 </html>
