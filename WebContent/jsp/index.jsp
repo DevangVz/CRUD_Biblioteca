@@ -25,7 +25,7 @@
 		<a href="authors/form/register">Registro Autores</a></br>
 		<a href="">Registro de Libros</a></br>
 		<a href="">Registro de editoriales</a></br>
-		<a href="">PrÃ©stamos</a></br>
+		<a href="">Préstamos</a></br>
 		<a href="">Registro Usuarios</a></br>
 	</body>
 </html>
