@@ -2,9 +2,7 @@ package org.biblioteca.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.biblioteca.model.Author;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +22,7 @@ public class AuthorDAO {
 		return dataSource.update(sql,p.getAName(),p.getLastName(),p.getDOB(),p.getNationality());
 	} 
 
-	public int Update(Author author){
+	public int update(Author author){
 		String sql="UPDATE Author SET AName=?,lastName=?,DOB=?,nationality=? where id =?;";
 		return dataSource.update(sql,author.getAName(),author.getLastName(),author.getDOB(),author.getNationality(),author.getID());  
 	}
