@@ -3,7 +3,6 @@ package org.biblioteca.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-
 import org.biblioteca.model.Author;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;  
@@ -18,25 +17,25 @@ public class AuthorDAO {
 	JdbcTemplate dataSource;
 
 	public int save(Author p){  
-		String sql="INSERT INTO Author (AName,lastName,DOB,nationality) VALUES (?,?,?,?)";  
+		String sql="INSERT INTO Author (AName,middleName,lastName,DOB,nationality) VALUES (?,?,?,?,?)";  
 		return dataSource.update(sql,p.getAName(),p.getLastName(),p.getDOB(),p.getNationality());
 	} 
 
 	public int update(Author author){
-		String sql="UPDATE Author SET AName=?,lastName=?,DOB=?,nationality=? where id =?;";
-		return dataSource.update(sql,author.getAName(),author.getLastName(),author.getDOB(),author.getNationality(),author.getID());  
+		String sql="UPDATE Author SET AName=?, middleName=?,lastName=?,DOB=?,nationality=? where id =?;";
+		return dataSource.update(sql,author.getAName(),author.getMiddleName(),author.getLastName(),author.getDOB(),author.getNationality(),author.getID());  
 	}
 
 	public int delete(int id){  
 	    String sql="delete from Author where ID=?";  
 	    return dataSource.update(sql,id);
 	}  
-	
+
 	public Author getAuthorByID(int id){
  		String sql="select * from Author where id=?"; 
 	    return dataSource.queryForObject(sql, new Object[]{id},new BeanPropertyRowMapper<Author>(Author.class));  
 	}
-	
+
 	public List<Author> getAll(){
 		return dataSource.query("select ID, AName,lastName,DOB,nationality from Author",new RowMapper<Author>(){  
 	        public Author mapRow(ResultSet rs, int row) throws SQLException {  
@@ -50,8 +49,7 @@ public class AuthorDAO {
 	        }  
 	    });  
 	}
-	
-	
+		
 	public JdbcTemplate getDataSource() {
 		return dataSource;
 	}

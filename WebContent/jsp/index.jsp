@@ -16,6 +16,7 @@
 				<tr>
 					<td><c:out value="${author.AName}" /></td>
 					<td><c:out value="${author.lastName}" /></td>
+					<td><c:out value="${author.middleName}" /></td>
 					<td><c:out value="${author.nationality}" /></td>
 					<td><c:out value="${author.DOB}" /></td>
 					<td><c:out value="${author.lastName}" /></td>

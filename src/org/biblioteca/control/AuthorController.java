@@ -30,7 +30,7 @@ public class AuthorController {
 		if(author.getID()==0)
 			return authorDAO.save(author); 
 		else
-			return authorDAO.Update(author); 
+			return authorDAO.update(author); 
 	}
 
 	@RequestMapping(value="/edit/{id}",method = RequestMethod.GET)  

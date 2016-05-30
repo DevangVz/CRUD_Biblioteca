@@ -5,11 +5,23 @@ import java.sql.Date;
 public class Author {
 	private int ID;
 	private String aName;
+	private String middleName;
+	public String getaName() {
+		return aName;
+	}
+	public void setaName(String aName) {
+		this.aName = aName;
+	}
+	public String getMiddleName() {
+		return middleName;
+	}
+	public void setMiddleName(String middleName) {
+		this.middleName = middleName;
+	}
 	private String lastName;
 	private Date DOB;
 	private String nationality;
-	
-	
+		
 	public Integer getID() {
 		return this.ID;
 	}
