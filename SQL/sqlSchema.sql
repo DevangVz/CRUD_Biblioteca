@@ -18,14 +18,16 @@ GRANT ALL PRIVILEGES on Biblioteca.* to devang@localhost;
 /*********************************DROP SECTION**************************************/
 
 DROP TABLE Reservation cascade;
-DROP TABLE Client CASCADE;
-DROP TABLE BOOK CASCADE;
-drop table author cascade;
-drop table genre cascade;
-drop table publisher cascade;
+DROP TABLE User CASCADE;
+DROP TABLE Book CASCADE;
+drop table Author cascade;
+drop table Genre cascade;
+drop table Publisher cascade;
+drop table AuthorBook cascade;
+drop table PublisherBook cascade;
 
 /*********************************CREATE SECTION************************************/
-CREATE TABLE Client(
+CREATE TABLE User(
 ID int4 primary key not null auto_increment ,
 cName varchar (50) not null,
 lastName varchar (50) not null,
@@ -40,9 +42,10 @@ description varchar (200)
 
 CREATE TABLE Author(
 ID int4 primary key not null auto_increment,
-aName varchar (50) not null,
+aName varchar (30) not null,
+middleName varchar (50),
 lastName varchar (50) not null,
-DOB date not null,
+DOB date,
 nationality varchar (30)
 );
 
@@ -58,16 +61,11 @@ ZC varchar(10)
 CREATE TABLE Book(
 ID int4 primary key not null auto_increment unique,
 title  varchar (50) not null,
-authorID int4 not null,
-published date not null,
 countrycode varchar (3),
 ISBN varchar (17) not null unique,
 genreID int4,
-publisherID  int4,
 pages int4,
-FOREIGN KEY (authorID) references Author(ID),
-FOREIGN KEY (genreID) references Genre(ID),
-FOREIGN KEY (publisherID) references Publisher(ID)
+FOREIGN KEY (genreID) references Genre(ID)
 );
 
 CREATE TABLE Reservation(
@@ -81,16 +79,19 @@ FOREIGN KEY (bookID) references Book(ID)
 );
 
 CREATE TABLE AuthorBook(
-ID int4 not null primary key auto_increment,
 bookID int4 not null,
-authorID int4 not null
+authorID int4 not null ,
+Primary Key (bookID,authorID),
+Foreign Key (bookID) references Book(ID),
+Foreign key (authorID) references Author(ID)
 );
 
-
-
-/*CREATE TABLE Membership(
-ID int4 primary key not null auto_increment,
-ClientID int4,
-StartDate date not null,
-ExpirationDate date not null
-);*/
+CREATE TABLE PublisherBook(
+bookID int4 not null,
+publisherID int4 not null,
+numberEdition int4 not null,
+publishDate date not null,
+Primary Key (bookID,publisherID,numberEdition),
+Foreign Key (bookID) references Book(ID),
+Foreign Key (publisherID) references Publisher(ID)
+);
