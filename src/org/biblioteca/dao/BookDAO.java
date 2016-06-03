@@ -3,7 +3,10 @@ package org.biblioteca.dao;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+
+import org.biblioteca.model.Author;
 import org.biblioteca.model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -17,16 +20,28 @@ public class BookDAO {
 	@Autowired
 	JdbcTemplate dataSource;
 
-	public int save(Book book, int publisher, int author, Date published, int numEdition){
+	public int save(Book book, int publisher, ArrayList<String> author, Date published, int numEdition){
 		String sql="INSERT INTO Book (title,countrycode,ISBN,genreID,pages) VALUES(?,?,?,?,?);"
-				+ "INSERT INTO PublisherBook (bookID, publisherID, numberEdition,publishDate) VALUES(?,?,?,?)"
-				+ "INSERT INTO AuthorBook (bookID, authorID) VALUES (?,?); ";
-		//Falta numero de edición y fecha de publicacion 
-		return dataSource.update(sql,book.getTitle(),book.getCountrycode(),book.getISBN(),book.getGenreID(),book.getPages(),
-				book.getID(), publisher,published, numEdition,
-				book.getID(), author);  
+				//+ "INSERT INTO PublisherBook (bookID, publisherID, numberEdition,publishDate) VALUES(?,?,?,?);"
+				;
+		int save= dataSource.update(sql,book.getTitle(),book.getCountrycode(),book.getISBN(),book.getGenreID(),book.getPages()
+				//, 
+				);
+		return save+saveAuthorsAndPublishers(author,book,publisher,published, numEdition);
 	}
 	
+	public int saveAuthorsAndPublishers(ArrayList<String> authorsID,Book book,int publisher, Date published, int numEdition){
+		int id = dataSource.queryForObject("select id from Book where ISBN like ?", Integer.class,book.getISBN());
+		int save=0;
+		for(String author: authorsID){
+			System.out.println(dataSource.queryForObject("SElect LAST_INSERT_ID() ", String.class));
+			String sql="INSERT INTO AuthorBook (bookID, authorID) VALUES (? ,?);";
+			save+=dataSource.update(sql,id,Integer.parseInt(author));
+		}
+		save+=dataSource.update("INSERT INTO PublisherBook (bookID, publisherID, numberEdition,publishDate) VALUES(?,?,?,?);",id,publisher,numEdition,published);
+		return save;
+	}
+		
 	public int update (Book book){
 		String sql= "UPDATE Book SET title=?,  countrycode=?, ISBN=?, genreID=?, pages=?;";
 		return dataSource.update(sql,book.getTitle(),book.getCountrycode(),book.getISBN(),book.getGenreID(),book.getPages());
