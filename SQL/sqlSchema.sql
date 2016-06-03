@@ -8,7 +8,7 @@
 *********************DO NOT USE USER ROOT FOR YOUR OWN SCHEMA***********************
 ************************************************************************************
 ************************************************************************************
-************************************************************************************/
+************************************************************************************
 
 CREATE USER 'devang'@'localhost' IDENTIFIED BY '123456';
 GRANT ALL ON *.* TO 'devang'@'localhost';
@@ -17,14 +17,15 @@ GRANT ALL PRIVILEGES on Biblioteca.* to devang@localhost;
 
 /*********************************DROP SECTION**************************************/
 
-DROP TABLE Reservation cascade;
-DROP TABLE User CASCADE;
-DROP TABLE Book CASCADE;
-drop table Author cascade;
-drop table Genre cascade;
-drop table Publisher cascade;
-drop table AuthorBook cascade;
-drop table PublisherBook cascade;
+DROP TABLE IF EXISTS Reservation cascade;
+drop table IF EXISTS AuthorBook cascade;
+drop table IF EXISTS PublisherBook cascade;
+DROP TABLE IF EXISTS User CASCADE;
+DROP TABLE IF EXISTS Book CASCADE;
+drop table IF EXISTS Author cascade;
+drop table IF EXISTS Genre cascade;
+drop table IF EXISTS Publisher cascade;
+
 
 /*********************************CREATE SECTION************************************/
 CREATE TABLE User(
@@ -70,11 +71,11 @@ FOREIGN KEY (genreID) references Genre(ID)
 
 CREATE TABLE Reservation(
 ID int4 not null primary key auto_increment,
-clientID int4 not null,
+userID int4 not null,
 bookID int4 not null,
 borrowedDate date not null,
 returnDate date not null,
-FOREIGN KEY (clientID) references Client(ID),
+FOREIGN KEY (userID) references User(ID),
 FOREIGN KEY (bookID) references Book(ID)
 );
 
